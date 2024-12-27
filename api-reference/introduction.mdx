@@ -1,33 +1,28 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: 'Trusto API Documentation'
+description: 'API endpoints for ERP integration'
 ---
+## Introduction
+This API reference is for developers who want to integrate their ERP systems with Trusto. The API allows you to access and manage Trusto data programmatically.
+For any support or queries, please contact [support@trusto.io]
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
 
-## Welcome
+## Authentication & Authorization
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+### Creating API Credentials
+- Generate `client_id` and `client_secret` in the User Management Dashboard under **API Keys**.
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+### Token Retrieval
+- Endpoint: `POST /auth/token`
+- Headers:
+- `Content-Type: application/x-www-form-urlencoded`
+- Body Parameters:
+- `client_id` (string, required): Generated in the API Keys section.
+- `client_secret` (string, required): Secret key associated with the `client_id`.
+- `grant_type` (string, required): Must be `client_credentials`.
 
-## Authentication
-
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
-
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
-```
+**Sample Request:**
+```bash
+curl -X POST "https://api.example.com/oauth2/token" \
+-H "Content-Type: application/x-www-form-urlencoded" \
+-d "client_id=YOUR_CLIENT_ID&client_secret=YOUR_CLIENT_SECRET&grant_type=client_credentials"

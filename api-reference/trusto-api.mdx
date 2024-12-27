@@ -1,0 +1,277 @@
+---
+title: 'Trusto API Documentation'
+description: 'API endpoints for ERP integration'
+---
+
+# Authentication & Authorization
+
+## Creating API Credentials
+- Generate `client_id` and `client_secret` in the User Management Dashboard under **API Keys**.
+
+## Token Retrieval
+- **Endpoint:** `POST /auth/token`
+- **Headers:**
+  - `Content-Type: application/x-www-form-urlencoded`
+- **Body Parameters:**
+  - `client_id` (string, required): Generated in the API Keys section.
+  - `client_secret` (string, required): Secret key associated with the `client_id`.
+  - `grant_type` (string, required): Must be `client_credentials`.
+
+**Sample Request:**
+```bash
+curl -X POST "https://api.example.com/oauth2/token" \
+-H "Content-Type: application/x-www-form-urlencoded" \
+-d "client_id=YOUR_CLIENT_ID&client_secret=YOUR_CLIENT_SECRET&grant_type=client_credentials"
+```
+
+**Sample Response:**
+```json
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "token_type": "Bearer",
+  "expires_in": 600
+}
+```
+
+## Using the Access Token
+Include the `access_token` in the `Authorization` header for API requests:
+```
+Authorization: Bearer YOUR_ACCESS_TOKEN
+```
+
+---
+
+# Alerts
+
+## Retrieve All Alerts
+The alerts API enables you to retrieve a list of alerts associated with the access token.
+
+### Endpoint:
+`GET /api/v1/alerts`
+
+### Request Headers:
+| Header           | Type    | Required | Description                       |
+|-------------------|---------|----------|-----------------------------------|
+| Content-Type      | string  | Yes      | Specifies the request content type (`application/json`). |
+| Authorization     | string  | Yes      | Bearer token (`Authorization: Bearer <access_token>`). |
+
+### Query Parameters:
+| Parameter        | Type          | Required | Description                                                   |
+|-------------------|---------------|----------|---------------------------------------------------------------|
+| dateTimeFrom      | string (UTC)  | No       | Start date and time for filtering alerts.                     |
+| dateTimeTo        | string (UTC)  | No       | End date and time for filtering alerts.                       |
+| provider          | string        | No       | Provider (e.g., `ETHOCA`, `VERIFI`).                         |
+| descriptor        | string        | No       | Merchant descriptor, supports exact or prefix matches.        |
+| type              | string        | No       | Alert type (e.g., `CONFIRMED_FRAUD`).                         |
+| status            | string        | No       | Current status of the alert (e.g., `OPEN`).                   |
+| sortOrder         | string        | No       | Sort order (`asc` or `desc`).                                 |
+| sortField         | string        | No       | Field to sort results (e.g., `alertTimeStamp`).               |
+| pageNumber        | integer       | No       | Page index to retrieve (default: 0).                          |
+| pageSize          | integer       | No       | Number of results per page (default: 10, max: 500).           |
+
+### Sample Request:
+```bash
+curl -X GET "https://api.example.com/api/v1/alerts?dateTimeFrom=2024-10-01T00:00:00Z&dateTimeTo=2024-11-30T23:59:59Z&provider=ETHOCA" \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+```
+
+### Sample Response:
+```json
+[
+  {
+    "id": "c8edf8a4-4e4d-4821-af34-9ed2995cbd8b",
+    "providerId": "2L07DBRFGBDLIW7SH59V969JG",
+    "provider": "ETHOCA",
+    "type": "CONFIRMED_FRAUD",
+    "alertTimeStamp": "2023-10-14T13:00:00.000Z",
+    "enrollmentId": "554df940-b344-40ab-85fd-fc7b89c86ad1",
+    "companyId": "7224a209-dc9c-4101-846d-2bc57eacd2b7",
+    "organizationId" : "ed770831-2d07-4637-819c-a6673a6b4514",
+    "issuer": "BARCLAYS",
+    "cardBin": "123456",
+    "cardLastFour": "1234",
+    "acquirerBin" : "12345678",
+    "status": "OPEN",
+    "transactionTimeStamp": "2023-10-12T09:30:00.000Z",
+    "merchantDescriptor": "SAMPLE STORE 12123123",
+    "ethocaMerchantId": "ETH123456",
+    "merchantId": "54321",
+    "merchantName" : "Sample Merchant Name",
+    "mcc": "5411",
+    "amount": 250.75,
+    "currency": "EUR",
+    "transactionType": "KEYED",
+    "initiatedBy": "CARDHOLDER",
+    "liability": "YES",
+    "authCode": "ABC12345",
+    "source" : "BARCLAYS",
+    "acquirerReferenceNumber": "12345678901234567890123",
+    "transactionId": "TRANS123456789",
+    "reasonCode": "UNAU",
+    "chargebackAmount": 250.75,
+    "chargebackCurrency": "EUR",
+    "createdAt": "2024-11-10T19:07:56.293Z",
+    "updatedAt": "2024-11-10T19:07:56.293Z",
+    "resolution": {
+      "resolution": "RESOLVED",
+      "amount": 123.45,
+      "refunded": "REFUNDED",
+      "firstPartyFraud": true,
+      "comments": "free form comments"
+    }
+ }, {
+    "id": "d9f2b4c5-1e5d-4f8e-9871-6b8a7f123abc",
+    "providerId": "12345456",
+    "provider": "VERIFI",
+    "type": "DISPUTE",
+    "alertTimeStamp": "2023-11-01T08:30:00.000Z",
+    "enrollmentId": "a1f9e5d4-c234-4abc-9876-f3d2b6a5a7d1",
+    "companyId": "b3e2c1f4-d567-4e4a-8265-f7d8a1c2b9d8",
+    "organizationId" : "ed770831-2d07-4637-819c-a6673a6b4514",
+    "cardBin": "654321",
+    "cardLastFour": "5678",
+    "cardExpirationDate" : "1126",
+    "status": "OPEN",
+    "statusCode" : 100,
+    "ruleType" : "Amount",
+    "ruleName" : "Accept All",
+    "installmentNumber" : 3,
+    "pricingTier" : "Tier 1",
+    "transactionTimeStamp": "2023-10-29T15:45:00.000Z",
+    "merchantDescriptor": "ANOTHER STORE 98765432",
+    "descriptorContact": "1234567890",
+    "merchantId" : "MERCH123",
+    "partnerId": "45678",
+    "partnerName": "Partner Co",
+    "clientName": "Client Inc",
+    "merchantOrderId": "ORD987654321",
+    "merchantName": "ANOTHER RETAIL SHOP",
+    "caid" : "1234567890",
+    "mcc": "5311",
+    "amount": 400.00,
+    "currency": "USD",
+    "authCode": "XYZ98765",
+    "acquirerReferenceNumber": "98765432109876543210987",
+    "transactionId": "TXN987654321",
+    "reasonCode": "AU01",
+    "paymentType": "VISA",
+    "chargebackAmount": 400.00,
+    "chargebackCurrency": "USD",
+    "createdAt": "2024-11-10T20:15:30.000Z",
+    "updatedAt": "2024-11-10T20:15:30.000Z",
+    "resolution": null
+ }
+]
+```
+
+---
+
+## Provide Alert Resolution
+The resolution endpoint allows resolving individual alerts. Bulk resolutions will be supported in the future.
+
+### Endpoint:
+`POST /api/v1/alerts/:alertId/resolution`
+
+### Request Headers:
+| Header           | Type    | Required | Description                       |
+|-------------------|---------|----------|-----------------------------------|
+| Content-Type      | string  | Yes      | Specifies the request content type (`application/json`). |
+| Authorization     | string  | Yes      | Bearer token (`Authorization: Bearer <access_token>`). |
+
+### Path Parameters:
+| Parameter | Type   | Description             |
+|-----------|--------|-------------------------|
+| alertId   | string | The ID of the alert to resolve. |
+
+### Body Parameters:
+| Parameter         | Type   | Required | Description                       |
+|--------------------|--------|----------|-----------------------------------|
+| resolution         | string | Yes      | Resolution type (`RESOLVED`, etc.). |
+| refunded           | string | No       | Refunded status (`REFUNDED`, `NOT_REFUNDED`). |
+| comments           | string | No       | Freeform comments.                |
+
+### Sample Request:
+```bash
+curl -X POST "https://api.example.com/api/v1/alerts/:alertId/resolution" \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
+-d '{
+  "resolution": "PREVIOUSLY_CANCELLED",
+  "refunded": "REFUNDED",
+  "comments": "Customer issue resolved."
+}'
+```
+
+### Sample Response:
+```json
+{
+  "id": "45fe3df2-969b-467a-a3e3-7df0f6bfab79",
+  "alertStatus": "RESOLVED",
+  "createdAt": "2024-11-16T19:08:53.020Z"
+}
+```
+
+---
+
+# Webhooks
+
+Webhooks enable organizations to receive event notifications about their subscribed entities.
+
+## Supported Events:
+| Event            | Description                               |
+|-------------------|-------------------------------------------|
+| alert.created     | Triggered when a new alert is created.   |
+| alert.resolved    | Triggered when an alert is resolved.     |
+
+## Request Headers:
+| Header           | Type    | Required | Description                       |
+|-------------------|---------|----------|-----------------------------------|
+| Content-Type      | string  | Yes      | Specifies the request content type (`application/json`). |
+| Authorization     | string  | Yes      | Can use Basic Authentication or custom headers. |
+
+### Authentication Options:
+1. **Basic Authentication**:
+   - Add `Authorization: Basic <BASE64_ENCODED_CREDENTIALS>`.
+
+2. **Custom Header**:
+   - Use a custom header, e.g., `X-API-Key: <API_KEY>`.
+
+### Sample Webhook Request:
+```bash
+curl -X POST "https://your.webhook.url" \
+-H "Content-Type: application/json" \
+-H "Authorization: Basic BASE64_BASIC_CREDENTIALS" \
+-d '{
+  "event": "alert.created",
+  "timestamp": "2024-11-01T00:00:00Z",
+  "payload": {
+    "id": "c8edf8a4-4e4d-4821-af34-9ed2995cbd8b",
+    "type": "CONFIRMED_FRAUD",
+    "amount": 250.75,
+    ...
+  }
+}'
+```
+
+---
+
+# Appendix
+
+## Alert Schema:
+| Attribute            | Type    | Description                                       |
+|-----------------------|---------|---------------------------------------------------|
+| id                   | UUID    | Primary key for the alert.                        |
+| provider             | string  | Provider name (`ETHOCA`, `VERIFI`).              |
+| status               | string  | Status of the alert (`OPEN`, `RESOLVED`, etc.).   |
+| alertTimeStamp       | string  | Timestamp when the alert was created (UTC).       |
+| amount               | number  | Transaction amount.                               |
+| currency             | string  | ISO currency code (`USD`, `EUR`, etc.).           |
+
+## Alert Resolution Parameters:
+| Resolution Value          | Updated Status | Description                          |
+|----------------------------|----------------|--------------------------------------|
+| STOPPED                   | RESOLVED       | The order was stopped.               |
+| PARTIALLY_STOPPED         | RESOLVED       | Part of the order was stopped.       |
+| NOT_FOUND                 | NOT_FOUND      | Alert not found in the system.       |
+| OTHER                     | RESOLVED       | Other outcomes described in comments.|
