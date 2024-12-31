@@ -1,194 +1,843 @@
 {
-  "openapi": "3.0.1",
-  "info": {
-    "title": "OpenAPI Plant Store",
-    "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
-    "license": {
-      "name": "MIT"
-    },
-    "version": "1.0.0"
-  },
-  "servers": [
-    {
-      "url": "http://sandbox.mintlify.com"
-    }
-  ],
-  "security": [
-    {
-      "bearerAuth": []
-    }
-  ],
+  "openapi": "3.0.0",
   "paths": {
-    "/plants": {
+    "/api/v1/alerts": {
       "get": {
-        "description": "Returns all plants from the system that the user has access to",
+        "operationId": "AlertsController_findAll",
+        "summary": "Get all alerts",
         "parameters": [
           {
-            "name": "limit",
+            "name": "outcome",
+            "required": true,
             "in": "query",
-            "description": "The maximum number of results to return",
+            "description": "Outcome of the transaction",
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "enum": [
+                "STOPPED",
+                "PARTIALLY_STOPPED",
+                "PREVIOUSLY_CANCELLED",
+                "MISSED",
+                "ACCOUNT_SUSPENDED",
+                "IN_PROGRESS",
+                "SHIPPER_CONTACTED",
+                "OTHER",
+                "RESOLVED",
+                "PREVIOUSLY_REFUNDED",
+                "UNRESOLVED_DISPUTE",
+                "NOT_FOUND"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "expiresIn",
+            "required": true,
+            "in": "query",
+            "description": "Time to expiration in hours (1-24) - equal or less than",
+            "schema": {
+              "example": 12,
+              "type": "number"
+            }
+          },
+          {
+            "name": "expired",
+            "required": true,
+            "in": "query",
+            "description": "Whether the alert is expired (true or false)",
+            "schema": {
+              "example": true,
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "status",
+            "required": true,
+            "in": "query",
+            "description": "Alert status",
+            "schema": {
+              "enum": [
+                "NEW",
+                "OPEN",
+                "RESOLVED",
+                "REFUNDED",
+                "PROCESSING",
+                "NOT_FOUND",
+                "CHARGEBACK",
+                "OTHER",
+                "EXPIRED"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "provider",
+            "required": true,
+            "in": "query",
+            "description": "Alert provider",
+            "schema": {
+              "enum": [
+                "ETHOCA",
+                "VERIFI"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "transactionEndDate",
+            "required": true,
+            "in": "query",
+            "description": "Transaction end date in YYYY-MM-DD format",
+            "schema": {
+              "example": "2024-01-31",
+              "type": "string"
+            }
+          },
+          {
+            "name": "transactionStartDate",
+            "required": true,
+            "in": "query",
+            "description": "Transaction start date in YYYY-MM-DD format",
+            "schema": {
+              "example": "2024-01-01",
+              "type": "string"
+            }
+          },
+          {
+            "name": "endDate",
+            "required": true,
+            "in": "query",
+            "description": "End date in YYYY-MM-DD format",
+            "schema": {
+              "example": "2024-01-31",
+              "type": "string"
+            }
+          },
+          {
+            "name": "startDate",
+            "required": true,
+            "in": "query",
+            "description": "Start date in YYYY-MM-DD format",
+            "schema": {
+              "example": "2024-01-01",
+              "type": "string"
+            }
+          },
+          {
+            "name": "size",
+            "required": true,
+            "in": "query",
+            "description": "Number of items per page",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "page",
+            "required": true,
+            "in": "query",
+            "description": "Page number",
+            "schema": {
+              "example": 1,
+              "type": "number"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Plant response",
+            "description": "",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Plant"
-                  }
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/PaginatedDto"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Alert"
+                          }
+                        }
+                      }
+                    }
+                  ]
                 }
               }
             }
           },
-          "400": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+          "403": {
+            "description": "Unauthorized"
           }
-        }
-      },
-      "post": {
-        "description": "Creates a new plant in the store",
-        "requestBody": {
-          "description": "Plant to add to the store",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewPlant"
-              }
-            }
-          },
-          "required": true
         },
-        "responses": {
-          "200": {
-            "description": "plant response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Plant"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+        "security": [
+          {
+            "bearer": []
           }
-        }
+        ],
+        "tags": [
+          "Alerts"
+        ]
       }
     },
-    "/plants/{id}": {
-      "delete": {
-        "description": "Deletes a single plant based on the ID supplied",
+    "/api/v1/alerts/{id}": {
+      "get": {
+        "operationId": "AlertsController_findOne",
+        "summary": "Find alert by ID",
         "parameters": [
           {
             "name": "id",
-            "in": "path",
-            "description": "ID of plant to delete",
             "required": true,
+            "in": "path",
+            "description": "Alert ID",
             "schema": {
-              "type": "integer",
-              "format": "int64"
+              "example": "123e4567-e89b-12d3-a456-426614174000",
+              "type": "string"
             }
           }
         ],
         "responses": {
-          "204": {
-            "description": "Plant deleted",
-            "content": {}
-          },
-          "400": {
-            "description": "unexpected error",
+          "200": {
+            "description": "Return alert by id",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "$ref": "#/components/schemas/Alert"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Unauthorized"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Alert not found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Alert with id 123e4567-e89b-12d3-a456-426614174000 not found"
                 }
               }
             }
           }
-        }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "Plant": {
-        "required": [
-          "name"
-        ],
-        "type": "object",
-        "properties": {
-          "name": {
-            "description": "The name of the plant",
-            "type": "string"
-          },
-          "tag": {
-            "description": "Tag to specify the type",
-            "type": "string"
+        },
+        "security": [
+          {
+            "bearer": []
           }
-        }
-      },
-      "NewPlant": {
-        "allOf": [
+        ],
+        "tags": [
+          "Alerts"
+        ]
+      }
+    },
+    "/api/v1/alerts/{id}/outcome": {
+      "get": {
+        "operationId": "AlertsController_findOutcome",
+        "summary": "Get alert resolution",
+        "parameters": [
           {
-            "$ref": "#/components/schemas/Plant"
-          },
-          {
-            "required": [
-              "id"
-            ],
-            "type": "object",
-            "properties": {
-              "id": {
-                "description": "Identification number of the plant",
-                "type": "integer",
-                "format": "int64"
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Alert ID",
+            "schema": {
+              "example": "123e4567-e89b-12d3-a456-426614174000",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Alert outcome",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OutcomeEntity"
+                }
               }
             }
           }
-        ]
-      },
-      "Error": {
-        "required": [
-          "error",
-          "message"
-        ],
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "message": {
-            "type": "string"
+        },
+        "security": [
+          {
+            "bearer": []
           }
-        }
+        ],
+        "tags": [
+          "Resolutions"
+        ]
       }
     },
+    "/api/v1/alerts/{id}/resolution": {
+      "put": {
+        "operationId": "AlertsController_resolve",
+        "summary": "Provide alert resolution",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Alert ID",
+            "schema": {
+              "example": "123e4567-e89b-12d3-a456-426614174000",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResolveAlertDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "Resolutions"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Trusto API Documentation",
+    "description": "API documentation Trusto chargeback alerts resolution",
+    "version": "1.0",
+    "contact": {
+
+    }
+  },
+  "tags": [
+    {
+      "name": "Alerts",
+      "description": "Alerts lookup and view"
+    },
+    {
+      "name": "Resolutions",
+      "description": "Providing resolutions to the alerts"
+    }
+  ],
+  "servers": [
+    {
+      "url": "https://api.trusto.one",
+      "description": "Sandbox environment"
+    },
+    {
+      "url": "https://api.trusto.io",
+      "description": "Production environment"
+    }
+  ],
+  "components": {
     "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer"
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
+    "schemas": {
+      "PaginatedDto": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "number",
+            "description": "The total number of items available",
+            "example": 100
+          },
+          "totalPages": {
+            "type": "number",
+            "description": "The total number of pages available",
+            "example": 10
+          },
+          "page": {
+            "type": "number",
+            "description": "The current page",
+            "example": 0
+          },
+          "size": {
+            "type": "number",
+            "description": "The number of items per page",
+            "example": 10
+          }
+        },
+        "required": [
+          "total",
+          "totalPages",
+          "page",
+          "size"
+        ]
+      },
+      "Alert": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier of the alert in the Trusto system",
+            "format": "uuid",
+            "example": "3114afe2-9996-48c9-88cb-3c9fc6a88414"
+          },
+          "providerId": {
+            "type": "string",
+            "description": "The unique identifier of the alert from the provider",
+            "example": "5F2RE3960S9ASDC2F026BF16"
+          },
+          "provider": {
+            "type": "string",
+            "description": "The provider of the alert",
+            "enum": [
+              "ETHOCA",
+              "VERIFI"
+            ],
+            "example": "ETHOCA"
+          },
+          "type": {
+            "type": "string",
+            "description": "Alert type",
+            "enum": [
+              "ETHOCA_CONFIRMED_FRAUD",
+              "ETHOCA_CUSTOMER_DISPUTE"
+            ],
+            "example": "ETHOCA_CONFIRMED_FRAUD"
+          },
+          "alertTimeStamp": {
+            "format": "date-time",
+            "type": "string",
+            "description": "The timestamp of the alert registration",
+            "example": "2024-12-12T12:00:00Z"
+          },
+          "enrollmentId": {
+            "type": "string",
+            "description": "ID of the enrollment that alert is associated with",
+            "format": "uuid",
+            "example": "3114afe2-9996-48c9-88cb-3c9fc6a88414"
+          },
+          "companyId": {
+            "type": "string",
+            "description": "ID of the company that alert is associated with",
+            "format": "uuid",
+            "example": "ab14afe2-9996-48c9-88cb-3c9fc6a88414"
+          },
+          "issuer": {
+            "type": "string",
+            "description": "Issuer of the alert",
+            "example": "HSBC"
+          },
+          "cardBin": {
+            "type": "string",
+            "description": "The bin of the card - first 6 or 8 digits",
+            "example": "483442"
+          },
+          "cardLastFour": {
+            "type": "string",
+            "description": "The last 4 digits of the card",
+            "example": "1234"
+          },
+          "cardExpirationDate": {
+            "type": "string",
+            "description": "The expiration date of the card",
+            "example": "12/25"
+          },
+          "acquirerBin": {
+            "type": "string",
+            "description": "The acquirer bin of the alert (VERIFI only)",
+            "example": "48344223"
+          },
+          "status": {
+            "type": "string",
+            "description": "The status of the alert",
+            "enum": [
+              "NEW",
+              "OPEN",
+              "RESOLVED",
+              "REFUNDED",
+              "PROCESSING",
+              "NOT_FOUND",
+              "CHARGEBACK",
+              "OTHER",
+              "EXPIRED"
+            ],
+            "example": "OPEN"
+          },
+          "ruleType": {
+            "type": "string",
+            "description": "The rule type that has triggered the resolution (VERIFI only)",
+            "example": "amount"
+          },
+          "ruleName": {
+            "type": "string",
+            "description": "The rule name that has triggered the resolution (VERIFI only)",
+            "example": "Above 10 AED"
+          },
+          "installmentNumber": {
+            "type": "string",
+            "description": "The number of the installment (VERIFI only)",
+            "example": "1"
+          },
+          "pricingTier": {
+            "type": "string",
+            "description": "The pricing tier of the alert (VERIFI only)",
+            "example": "Tier 2"
+          },
+          "transactionTimeStamp": {
+            "type": "string",
+            "description": "The timestamp of the transaction in UTC TZ",
+            "format": "date-time",
+            "example": "2024-12-12T12:00:00Z"
+          },
+          "merchantDescriptor": {
+            "type": "string",
+            "description": "The merchant descriptor",
+            "example": "MERCHANT STORE 1"
+          },
+          "descriptorContact": {
+            "type": "string",
+            "description": "The contact assigned to merchant descriptor",
+            "example": "John Doe / 971582212233"
+          },
+          "ethocaMergantId": {
+            "type": "string",
+            "description": "The merchant id in Ethoca system (ETHOCA only)",
+            "example": "123456"
+          },
+          "merchantId": {
+            "type": "string",
+            "description": "The generic merchant ID",
+            "example": "MERCHANTSTORE123"
+          },
+          "merchantOrderId": {
+            "type": "string",
+            "description": "The order ID provided by the merchant",
+            "example": "ORDER123"
+          },
+          "merchantName": {
+            "type": "string",
+            "description": "The merchant name",
+            "example": "Ecommerce Merchant LLC"
+          },
+          "partnerId": {
+            "type": "string",
+            "description": "The partner ID (VERIFI only)",
+            "example": "ABC123456"
+          },
+          "partnerName": {
+            "type": "string",
+            "description": "The partner name (VERIFI only)",
+            "example": "Partner Merchant LLC"
+          },
+          "clientName": {
+            "type": "string",
+            "description": "The client name (VERIFI only)",
+            "example": "John Doe"
+          },
+          "caid": {
+            "type": "string",
+            "description": "The descriptor CAID (VERIFI only)",
+            "example": "12345678"
+          },
+          "mcc": {
+            "type": "string",
+            "description": "The merchant category code (MCC)",
+            "example": "3901"
+          },
+          "amount": {
+            "type": "number",
+            "description": "The amount of the dispute",
+            "example": 100.12
+          },
+          "currency": {
+            "type": "string",
+            "description": "The currency of the dispute",
+            "example": "AED"
+          },
+          "transactionType": {
+            "type": "string",
+            "description": "The type of the card entry for the transaction",
+            "enum": [
+              "keyed",
+              "swiped",
+              "eCommerce",
+              "unknown"
+            ],
+            "example": "eCommerce"
+          },
+          "initiatedBy": {
+            "type": "string",
+            "description": "The initiator of the alert",
+            "enum": [
+              "issuer",
+              "cardholder",
+              "not_available"
+            ],
+            "example": "cardholder"
+          },
+          "liability": {
+            "type": "string",
+            "description": "The liability of the alert",
+            "enum": [
+              "yes",
+              "no",
+              "not_available"
+            ],
+            "example": "yes"
+          },
+          "authCode": {
+            "type": "string",
+            "description": "The authorization code of the acquirer",
+            "nullable": true,
+            "example": "123456"
+          },
+          "source": {
+            "type": "string",
+            "description": "The source of the alert",
+            "nullable": true,
+            "example": "Portal"
+          },
+          "reasonCode": {
+            "type": "string",
+            "description": "The reason code of the chargeback",
+            "nullable": true,
+            "example": "UAU123"
+          },
+          "acquirerReferenceNumber": {
+            "type": "string",
+            "description": "The acquirer reference number",
+            "nullable": true,
+            "example": "123456"
+          },
+          "transactionId": {
+            "type": "string",
+            "description": "The transaction ID (ETHOCA only)",
+            "nullable": true,
+            "example": "TRANS123456789"
+          },
+          "chargebackAmount": {
+            "type": "number",
+            "description": "The amount of the chargeback (ETHOCA only)",
+            "nullable": true,
+            "example": 100.12
+          },
+          "chargebackCurrency": {
+            "type": "string",
+            "description": "The currency of the chargeback (ETHOCA only)",
+            "nullable": true,
+            "example": "AED"
+          },
+          "paymentType": {
+            "type": "string",
+            "description": "The payment type of the alert",
+            "nullable": true,
+            "example": "Credit Card"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "The created date of the alert in the Trusto system",
+            "format": "date-time",
+            "example": "2024-12-12T12:00:00Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "The updated date of the alert in the Trusto system",
+            "format": "date-time",
+            "example": "2024-12-12T12:00:00Z"
+          }
+        },
+        "required": [
+          "id",
+          "providerId",
+          "provider",
+          "type",
+          "alertTimeStamp",
+          "enrollmentId",
+          "companyId",
+          "issuer",
+          "cardBin",
+          "cardLastFour",
+          "cardExpirationDate",
+          "acquirerBin",
+          "status",
+          "ruleType",
+          "ruleName",
+          "installmentNumber",
+          "pricingTier",
+          "transactionTimeStamp",
+          "merchantDescriptor",
+          "descriptorContact",
+          "ethocaMergantId",
+          "merchantId",
+          "merchantOrderId",
+          "merchantName",
+          "partnerId",
+          "partnerName",
+          "clientName",
+          "caid",
+          "mcc",
+          "amount",
+          "currency",
+          "transactionType",
+          "initiatedBy",
+          "liability",
+          "authCode",
+          "source",
+          "reasonCode",
+          "acquirerReferenceNumber",
+          "transactionId",
+          "chargebackAmount",
+          "chargebackCurrency",
+          "paymentType",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "OutcomeEntity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier of the outcome",
+            "format": "uuid",
+            "example": "4a0c8f5d-4b8d-4f4d-8f1a-2f8c9c1e5b7b"
+          },
+          "alertId": {
+            "type": "string",
+            "description": "Unique identifier of the alert",
+            "format": "uuid",
+            "example": "4a0c8f5d-4b8d-4f4d-8f1a-2f8c9c1e5b7b"
+          },
+          "ethocaID": {
+            "type": "string",
+            "description": "Ethoca ID of the Ethoca alert",
+            "example": "123456"
+          },
+          "outcome": {
+            "type": "string",
+            "description": "The outcome of the resolution",
+            "enum": [
+              "stopped",
+              "partially_stopped",
+              "previously_cancelled",
+              "missed",
+              "notfound",
+              "account_suspended",
+              "in_progress",
+              "shipper_contacted",
+              "other",
+              "resolved",
+              "previously_refunded",
+              "unresolved_dispute",
+              "not_found"
+            ],
+            "example": "stopped"
+          },
+          "refunded": {
+            "type": "string",
+            "description": "The refund decision",
+            "enum": [
+              "refunded",
+              "not refunded",
+              "not settled"
+            ],
+            "example": "refunded"
+          },
+          "amountStopped": {
+            "type": "number",
+            "description": "The amount stopped",
+            "example": 100.12
+          },
+          "comments": {
+            "type": "string",
+            "description": "Comments",
+            "maxLength": 250,
+            "example": "This is a comment"
+          },
+          "actionTimestamp": {
+            "type": "string",
+            "description": "Timestamp of the resolution",
+            "format": "date-time (ISO 8601)",
+            "example": "2024-01-01T00:00:00.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "alertId",
+          "ethocaID",
+          "outcome",
+          "refunded",
+          "amountStopped",
+          "comments",
+          "actionTimestamp"
+        ]
+      },
+      "ResolveAlertDto": {
+        "type": "object",
+        "properties": {
+          "amountStopped": {
+            "type": "number",
+            "description": "Stopped amount of the transaction. Applicable only to the resolution=PARTIALLY_STOPPED",
+            "example": 100.12
+          },
+          "comments": {
+            "type": "string",
+            "description": "Free-form comment that merchant thinks necessary to pass with the resolution",
+            "example": "Comments"
+          },
+          "resolution": {
+            "type": "string",
+            "description": "Resolution outcome",
+            "enum": [
+              "STOPPED",
+              "PARTIALLY_STOPPED",
+              "PREVIOUSLY_CANCELLED",
+              "MISSED",
+              "NOTFOUND",
+              "ACCOUNT_SUSPENDED",
+              "IN_PROGRESS",
+              "SHIPPER_CONTACTED",
+              "OTHER",
+              "RESOLVED",
+              "PREVIOUSLY_REFUNDED",
+              "UNRESOLVED_DISPUTE",
+              "NOT_FOUND"
+            ],
+            "example": "PARTIALLY_STOPPED"
+          },
+          "refunded": {
+            "type": "string",
+            "description": "The refund decision made by the merchant",
+            "enum": [
+              "REFUNDED",
+              "NOT REFUNDED",
+              "NOT SETTLED"
+            ],
+            "example": "REFUNDED"
+          }
+        },
+        "required": [
+          "amountStopped",
+          "comments",
+          "resolution",
+          "refunded"
+        ]
       }
     }
   }

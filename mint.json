@@ -1,18 +1,18 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "Trusto.io - Prevent Chargebacks",
   "logo": {
-    "dark": "/logo/dark.svg",
-    "light": "/logo/light.svg"
+    "dark": "/logo/trusto_logo_dark.svg",
+    "light": "/logo/trusto_logo.png"
   },
   "favicon": "/favicon.svg",
   "colors": {
-    "primary": "#0D9373",
-    "light": "#07C983",
-    "dark": "#0D9373",
+    "primary": "#0F47C0",
+    "light": "#00CFFD",
+    "dark": "#CDFF50",
     "anchors": {
-      "from": "#0D9373",
-      "to": "#07C983"
+      "from": "#0F47C0",
+      "to": "#CDFF50"
     }
   },
   "topbarLinks": [
@@ -23,7 +23,7 @@
   ],
   "topbarCtaButton": {
     "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
+    "url": "https://app.trusto.io"
   },
   "tabs": [
     {
@@ -31,55 +31,35 @@
       "url": "api-reference"
     }
   ],
+  "layout": "topnav",
   "anchors": [
     {
-      "name": "Documentation",
-      "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
-    },
-    {
-      "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
-    },
-    {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
+      "name": "API Reference",
+      "icon": "code",
+      "url": "api-reference",
+      "openapi": "/api-reference/openapi.json"
     }
   ],
   "navigation": [
     {
       "group": "Get Started",
       "pages": [
-        "introduction",
-        "quickstart",
-        "development"
+        "main",
+        "api-reference"
       ]
     },
     {
-      "group": "Essentials",
+      "group": "Authentication",
+      "icon": "lock",
       "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation",
-        "essentials/reusable-snippets"
+        "/api-reference/endpoint/authentication"
       ]
     },
     {
-      "group": "API Documentation",
+      "group": "Webhooks",
+      "icon": "lock",
       "pages": [
-        "api-reference/introduction"
-      ]
-    },
-    {
-      "group": "Endpoint Examples",
-      "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
+        "/api-reference/webhooks/introduction"
       ]
     }
   ],

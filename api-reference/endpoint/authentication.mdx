@@ -1,0 +1,39 @@
+---
+title: 'Authentication'
+description: 'All API endpoints are authenticated using Bearer tokens and picked up from the specification file.'
+---
+# Authentication & Authorization
+
+## Creating API Credentials
+- Generate `client_id` and `client_secret` in the User Management Dashboard under **API Keys**.
+
+## Token Retrieval
+- **Endpoint:** `POST /auth/token`
+- **Headers:**
+- `Content-Type: application/x-www-form-urlencoded`
+- **Body Parameters:**
+- `client_id` (string, required): Generated in the API Keys section.
+- `client_secret` (string, required): Secret key associated with the `client_id`.
+- `grant_type` (string, required): Must be `client_credentials`.
+
+**Sample Request:**
+```bash
+curl -X POST "https://api.example.com/oauth2/token" \
+-H "Content-Type: application/x-www-form-urlencoded" \
+-d "client_id=YOUR_CLIENT_ID&client_secret=YOUR_CLIENT_SECRET&grant_type=client_credentials"
+```
+
+**Sample Response:**
+```json
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "token_type": "Bearer",
+  "expires_in": 600
+}
+```
+
+## Using the Access Token
+Include the `access_token` in the `Authorization` header for API requests:
+```
+Authorization: Bearer YOUR_ACCESS_TOKEN
+```
