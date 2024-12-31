@@ -1,11 +1,11 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "Trusto.io - Prevent Chargebacks",
   "logo": {
     "dark": "/logo/trusto_logo_dark.svg",
     "light": "/logo/trusto_logo.png"
   },
-  "favicon": "/favicon_trusto.svg",
+  "favicon": "/favicon.svg",
   "colors": {
     "primary": "#0F47C0",
     "light": "#00CFFD",
@@ -18,7 +18,7 @@
   "topbarLinks": [
     {
       "name": "Support",
-      "url": "support@trusto.io"
+      "url": "mailto:hi@mintlify.com"
     }
   ],
   "topbarCtaButton": {
@@ -31,26 +31,41 @@
       "url": "api-reference"
     }
   ],
+  "layout": "topnav",
+  "anchors": [
+    {
+      "name": "API Reference",
+      "icon": "code",
+      "url": "api-reference",
+      "openapi": "/api-reference/openapi.json"
+    }
+  ],
   "navigation": [
     {
       "group": "Get Started",
       "pages": [
-        "introduction"
+        "main",
+        "api-reference"
       ]
     },
     {
-      "group": "API Documentation",
+      "group": "Authentication",
+      "icon": "lock",
       "pages": [
-        "api-reference/trusto-api"
+        "/api-reference/endpoint/authentication"
       ]
     },
     {
-      "group": "Endpoint Examples",
+      "group": "Webhooks",
+      "icon": "lock",
       "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
+        "/api-reference/webhooks/introduction"
       ]
     }
-  ]
+  ],
+  "footerSocials": {
+    "x": "https://x.com/mintlify",
+    "github": "https://github.com/mintlify",
+    "linkedin": "https://linkedin.com/company/mintlify"
+  }
 }

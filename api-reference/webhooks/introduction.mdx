@@ -1,0 +1,44 @@
+---
+title: 'Trusto Webhooks'
+description: 'Webhooks API reference'
+---
+
+# Webhooks
+
+Webhooks enable organizations to receive event notifications about their subscribed entities.
+
+## Supported Events:
+| Event            | Description                               |
+|-------------------|-------------------------------------------|
+| alert.created     | Triggered when a new alert is created.   |
+| alert.resolved    | Triggered when an alert is resolved.     |
+
+## Request Headers:
+| Header           | Type    | Required | Description                       |
+|-------------------|---------|----------|-----------------------------------|
+| Content-Type      | string  | Yes      | Specifies the request content type (`application/json`). |
+| Authorization     | string  | Yes      | Can use Basic Authentication or custom headers. |
+
+### Authentication Options:
+1. **Basic Authentication**:
+- Add `Authorization: Basic <BASE64_ENCODED_CREDENTIALS>`.
+
+2. **Custom Header**:
+- Use a custom header, e.g., `X-API-Key: <API_KEY>`.
+
+### Sample Webhook Request:
+```bash
+curl -X POST "https://your.webhook.url" \
+-H "Content-Type: application/json" \
+-H "Authorization: Basic BASE64_BASIC_CREDENTIALS" \
+-d '{
+  "event": "alert.created",
+  "timestamp": "2024-11-01T00:00:00Z",
+  "payload": {
+    "id": "c8edf8a4-4e4d-4821-af34-9ed2995cbd8b",
+    "type": "CONFIRMED_FRAUD",
+    "amount": 250.75,
+    ...
+  }
+}'
+```
