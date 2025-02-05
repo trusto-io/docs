@@ -4,9 +4,50 @@ description: 'Documentation home for Trusto chargeback prevention'
 ---
 
 
-## Alerts
+# WORKING ALERTS: BEST PRACTICES TO PREVENT CHARGEBACKS
 
-Alerts for chargeback prevention
+Preventing chargebacks is more important than ever. As your trusted partner, here is a helpful guide to avoid chargebacks and fight fraud.
+
+## TIPS FOR PREVENTING CHARGEBACKS
+
+### Refund Alerts Within 24 Hours
+We highly recommend that all Alerts are worked within 24 hours, including your outcome and the refund where applicable. This will allow time for the refund notification to flow back to the issuer with enough time to prevent the chargeback.
+
+### Refund the Exact Value of the Alert
+Ensure you process a refund for the exact dollar value in the Alert. For example, if you receive an Alert valued at \$19.99, but you process a refund for \$10.99, this transaction will likely result in a chargeback.
+
+### Ensure the Refund was Successful
+Did you receive a notification from your acquirer that the refund was processed? If so, you’re good to go!
+
+## WHAT OUTCOME SHOULD I PROVIDE?
+
+### Outcome Descriptions and Refund Recommendations
+
+| Outcome | Description | Refund Recommendation |
+|---------|-------------|----------------------|
+| **Resolved** | The case has been resolved with the customer. No chargeback is expected because either the refund is being processed or no refund is needed. | Refunded / Not Refunded |
+| **Resolved – Previously Refunded** | The case has been resolved with the customer; a refund has already been processed. | Refunded |
+| **Unresolved - Dispute** | You disagree with the reason for dispute. The chargeback will be disputed. | Not Refunded |
+| **Not Found** | You cannot locate this transaction in your system. | Not Refunded |
+| **Other** | None of the options above are applicable for this specific transaction. | Refunded / Not Refunded |
+
+### Confirmed Fraud & Customer Dispute
+
+| Outcome | Description | Refund Recommendation |
+|---------|-------------|----------------------|
+| **Stopped** | This alert allowed you to stop the fraud. | Refunded / Not Settled |
+| **Partially Stopped** | You were able to stop part of the fraud. For example, if a cardholder ordered 2 products and you shipped one but still have one. | Refunded / Not Refunded / Not Settled |
+| **Shipper Contacted** | The shipper has been contacted and you’re attempting to intercept it. | Refunded / Not Refunded / Not Settled |
+| **Previously Cancelled** | You refunded the transaction before we sent the alert because either you spoke with the cardholder or your own internal fraud system detected this as fraud. | Refunded / Not Settled |
+| **Too Late** | The fraudster has already used all of the goods/services. | Refunded / Not Refunded / Not Settled |
+| **Not Found** | You cannot locate this transaction in your system. | Not Refunded |
+| **Account Suspended** | You have suspended this account from placing future orders. | Refunded / Not Refunded / Not Settled |
+| **In Progress** | This is a temporary status you can select if you’re not certain what the outcome is yet. You should come back to update the alert once the appropriate outcome has been identified. | Refunded / Not Refunded / Not Settled |
+| **Other** | None of the options above are applicable for this transaction. | Refunded / Not Refunded / Not Settled |
+
+
+
+
 
 
 
