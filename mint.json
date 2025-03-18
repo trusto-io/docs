@@ -27,8 +27,8 @@
   },
   "tabs": [
     {
-      "name": "Alerts Outcome Description",
-      "url": "chargebacks"
+      "name": "Resolving alerts",
+      "url": "alerts"
     },
     {
       "name": "API Reference",
@@ -46,10 +46,10 @@
   ],
   "navigation": [
     {
-      "group": "Get Started",
+      "group": "",
       "pages": [
         "main",
-        "chargebacks"
+        "alerts"
       ]
     },
     {
