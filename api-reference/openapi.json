@@ -591,16 +591,6 @@
             ],
             "example": "cardholder"
           },
-          "liability": {
-            "type": "string",
-            "description": "The liability of the alert",
-            "enum": [
-              "yes",
-              "no",
-              "not_available"
-            ],
-            "example": "yes"
-          },
           "authCode": {
             "type": "string",
             "description": "The authorization code of the acquirer",
@@ -696,7 +686,6 @@
           "currency",
           "transactionType",
           "initiatedBy",
-          "liability",
           "authCode",
           "source",
           "reasonCode",
