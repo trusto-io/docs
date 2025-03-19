@@ -1,6 +1,6 @@
 ---
-title: 'Trusto Webhooks'
-description: 'Webhooks API reference'
+title: "Trusto Webhooks"
+description: "Webhooks API reference"
 ---
 
 # Webhooks
@@ -8,25 +8,31 @@ description: 'Webhooks API reference'
 Webhooks enable organizations to receive event notifications about their subscribed entities.
 
 ## Supported Events:
-| Event            | Description                               |
-|-------------------|-------------------------------------------|
-| alert.created     | Triggered when a new alert is created.   |
-| alert.resolved    | Triggered when an alert is resolved.     |
+
+| Event          | Description                            |
+| -------------- | -------------------------------------- |
+| alert.created  | Triggered when a new alert is created. |
+| alert.resolved | Triggered when an alert is resolved.   |
 
 ## Request Headers:
-| Header           | Type    | Required | Description                       |
-|-------------------|---------|----------|-----------------------------------|
-| Content-Type      | string  | Yes      | Specifies the request content type (`application/json`). |
-| Authorization     | string  | Yes      | Can use Basic Authentication or custom headers. |
+
+| Header        | Type   | Required | Description                                              |
+| ------------- | ------ | -------- | -------------------------------------------------------- |
+| Content-Type  | string | Yes      | Specifies the request content type (`application/json`). |
+| Authorization | string | Yes      | Can use Basic Authentication or custom headers.          |
 
 ### Authentication Options:
+
 1. **Basic Authentication**:
+
 - Add `Authorization: Basic <BASE64_ENCODED_CREDENTIALS>`.
 
-2. **Custom Header**:
+1. **Custom Header**:
+
 - Use a custom header, e.g., `X-API-Key: <API_KEY>`.
 
 ### Sample Webhook Request:
+
 ```bash
 curl -X POST "https://your.webhook.url" \
 -H "Content-Type: application/json" \
@@ -69,7 +75,6 @@ curl -X POST "https://your.webhook.url" \
             "currency": "USD",
             "transactionType": "eCommerce",
             "initiatedBy": "issuer",
-            "liability": "no",
             "authCode": "73536582",
             "source": null,
             "reasonCode": null,
