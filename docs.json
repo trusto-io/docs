@@ -79,7 +79,9 @@
         "groups": [
           {
             "group": "API Reference",
-            "pages": []
+            "pages": [
+              "api-reference/trusto-api"
+            ]
           }
         ]
       },
