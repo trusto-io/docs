@@ -65,33 +65,6 @@
         "anchor": "API Reference",
         "icon": "code",
         "href": "/api-reference/trusto-api"
-      },
-      {
-        "anchor": "API Reference",
-        "icon": "code",
-        "openapi": {
-          "source": "/api-reference/openapi.json",
-          "directory": "api-reference"
-        },
-        "tabs": [
-          {
-            "tab": "API Reference",
-            "groups": [
-              {
-                "group": "Authentication",
-                "icon": "lock",
-                "pages": []
-              },
-              {
-                "group": "Webhooks",
-                "icon": "lock",
-                "pages": [
-                  "api-reference/webhooks/introduction"
-                ]
-              }
-            ]
-          }
-        ]
       }
     ]
   }
