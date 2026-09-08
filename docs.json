@@ -70,6 +70,13 @@
             "pages": [
               "api-reference/trusto-api"
             ]
+          },
+          {
+            "group": "Sandbox",
+            "icon": "flask-conical",
+            "pages": [
+              "sandbox/list-alerts"
+            ]
           }
         ]
       }
