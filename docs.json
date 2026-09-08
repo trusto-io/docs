@@ -64,6 +64,11 @@
       {
         "anchor": "API Reference",
         "icon": "code",
+        "href": "/api-reference/trusto-api"
+      },
+      {
+        "anchor": "API Reference",
+        "icon": "code",
         "openapi": {
           "source": "/api-reference/openapi.json",
           "directory": "api-reference"
