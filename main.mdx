@@ -1,23 +1,76 @@
 ---
-title: Trusto - charebacks prevention solution
-description: 'Documentation home for Trusto chargeback prevention'
+title: "Trusto documentation"
+description: "Operational guides and API reference for receiving, matching, and resolving chargeback prevention alerts."
+sidebarTitle: "Overview"
 ---
 
+# Operate Trusto chargeback prevention
 
-# Trusto Chargeback Prevention & Revenue Protection
+Trusto helps merchants, payment service providers, and acquirers act on chargeback signals before they become completed disputes. The platform receives alerts from payment-network providers, connects them with enrolled merchant and transaction data, and gives your team one place to record the action taken.
 
-## Introduction
+Use this documentation to run the alert workflow or connect your own systems to it.
 
-[Trusto.io](https://www.trusto.io/) is a cutting-edge chargeback prevention solution designed to help businesses **accept more payments, protect revenue, and scale with confidence**.
-By stopping up to **95% of chargebacks**, Trusto enables companies to **reduce revenue losses and improve payment acceptance rates**.
+## How the workflow operates
 
+| Stage | What happens | Your action |
+| --- | --- | --- |
+| **1. Dispute signal** | A cardholder contacts their issuer about a transaction or suspected fraud. | No action is required until Trusto creates an alert. |
+| **2. Detection** | A prevention provider detects the dispute signal and sends it to Trusto. | Monitor for new alerts in the portal or through the API. |
+| **3. Match** | Trusto associates the alert with enrolled merchant data and, when available, an external transaction. | Verify the match using transaction identifiers, card details, date, amount, and currency. |
+| **4. Resolve** | You refund the transaction, decline to refund it, or identify why the alert is invalid. | Complete the payment action first, then record the matching resolution in Trusto. |
+| **5. Confirm** | Trusto sends the outcome to the alert provider and updates the alert status. | Verify that the outcome succeeded and retain supporting references in the comments. |
 
+## Start with your role
 
+### Alert operations
 
+Use [Matching and resolving alerts](/alerts) if you work alerts in the Trusto portal. It explains how to:
 
+- match an alert to the correct transaction;
+- prioritize alerts before they expire;
+- verify an existing refund or chargeback;
+- refund the full alert amount and confirm that the refund succeeded;
+- choose **Refunded**, **Not Refunded**, or the correct **Invalid** reason;
+- record evidence that another operator can review later.
 
+### API integration
 
+Use the [Trusto API reference](/api-reference/trusto-api) if you retrieve or resolve alerts from an ERP, payment platform, or internal operations tool. It documents:
 
+- API-key authentication with `X-API-KEY`;
+- alert list filters and pagination;
+- alert-detail and outcome payloads;
+- resolution requests and response statuses;
+- supported webhook events.
 
+## Daily operating checklist
 
+1. Review new and unresolved alerts frequently.
+2. Prioritize alerts approaching their expiration time.
+3. Match each alert to one payment before taking action.
+4. Check whether the payment was already refunded or charged back.
+5. If refunding, process the exact alert amount and confirm the refund succeeded.
+6. Record the resolution in Trusto with useful references in the comments.
+7. Verify that the alert status and outcome reflect what happened.
 
+Trusto recommends completing the alert action and recording its outcome within 24 hours. Acting quickly gives the refund notification time to reach the issuer, but a refund does not guarantee that a chargeback will be prevented.
+
+## Resolution decisions
+
+| Decision | Use it when | Resulting alert status |
+| --- | --- | --- |
+| **Refunded** | The correct transaction was refunded successfully. | `RESOLVED` |
+| **Not Refunded** | You chose not to refund and are prepared to continue through the chargeback process. | `CHARGEBACK` |
+| **Invalid** | The transaction was previously refunded, a chargeback was already received, the alert is a duplicate, or the transaction cannot be found. | `INVALID` |
+
+For the evidence to collect for each invalid reason, see [Choose the resolution status](/alerts#choose-the-resolution-status). For exact API values and payload examples, see [Provide an alert resolution](/api-reference/trusto-api#provide-an-alert-resolution).
+
+## Before going live
+
+- Confirm that merchant descriptors and identifiers are enrolled correctly.
+- Decide who owns alert monitoring, transaction matching, refunds, and exception review.
+- Give operators access to the payment records needed for matching.
+- Generate and store API credentials securely if you are integrating programmatically.
+- Test alert retrieval and resolution in your integration before using it for live operations.
+
+For product capabilities and commercial information, visit [trusto.io](https://www.trusto.io/).
