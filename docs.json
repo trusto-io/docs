@@ -76,6 +76,16 @@
       {
         "anchor": "API Reference",
         "icon": "code",
+        "groups": [
+          {
+            "group": "API Reference",
+            "pages": []
+          }
+        ]
+      },
+      {
+        "anchor": "API Reference",
+        "icon": "code",
         "href": "/api-reference/trusto-api"
       }
     ]
