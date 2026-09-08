@@ -1,50 +1,78 @@
 ---
-title: "Resolving alerts"
-description: "Preventing chargebacks is more important than ever. As your trusted partner, here is a helpful guide to avoid chargebacks and fight fraud."
+title: "Matching and resolving alerts"
+description: "Match prevention alerts to payment records, confirm refunds, and record the correct resolution in Trusto."
 ---
 
-# Working with alerts: best practices to prevent chargebacks
+Match each alert to the correct payment before deciding how to resolve it. This guide combines transaction matching with Trusto's alert-resolution practices.
 
-Preventing chargebacks is more important than ever. As your trusted partner, here is a helpful guide to avoid chargebacks and fight fraud.
+## Match the alert to a transaction
 
-## Refund Alerts Within 24 Hours
+Search payment records using the strongest available identifiers.
 
-We highly recommend that all Alerts are worked within 24 hours, including your outcome and the refund where applicable. This will allow time for the refund notification to flow back to the issuer with enough time to prevent the chargeback.
+| Priority | Compare | How to narrow the search |
+| --- | --- | --- |
+| 1 | Transaction ID | Normalize known date prefixes or suffixes before comparing IDs. |
+| 2 | Acquirer reference number (ARN) and masked card details | Compare both; an ARN alone may be reused. |
+| 3 | Authorization code and masked card details | If several records match, use the authorization date within a two-day window. |
+| 4 | Masked card details, transaction date, amount, and currency | Use these together when stronger identifiers are unavailable. |
 
-After 24hrs mark the alert is marked as "expired" as the chargeback prevention is no longer highly guaranteed.
+Masked card details mean the BIN and last four digits. Use the merchant's card acceptor ID (CAID), when available, to narrow candidates.
 
-## Refund the Exact Value of the Alert
+Allow for date-only values, midnight placeholders, and timezone differences. For different currencies, compare using the exchange rate at the transaction time; a 1–2% variance can help identify candidates. Adjust search windows gradually.
 
-Ensure you process a refund for the exact dollar value in the Alert. For example, if you receive an Alert valued at 19.99 USD,  but you process a refund for 10.99 USD, this transaction will likely result in a chargeback.
+If multiple candidates remain, review them before refunding. If none can be verified, follow **Not Found** below.
 
-## Ensure the Refund was Successful
+## Resolve the alert
 
-Did you receive a notification from your acquirer that the refund was processed? If so, you’re good to go!
+### Work alerts within 24 hours
 
-## Trusto alerts resolution statuses and recommendation
+Trusto recommends working every alert within 24 hours, including recording the outcome and processing a refund where applicable. This gives the refund notification time to reach the issuer and helps prevent a chargeback.
+
+The existing alert workflow marks alerts as expired after 24 hours. Act promptly: a refund does not guarantee that a chargeback will be prevented.
+
+### Check for an existing refund or chargeback
+
+Before issuing a refund, check whether the payment was already refunded, whether a chargeback has already arrived, or whether another alert refers to the same transaction. Use the relevant **Invalid** reason below when applicable.
+
+### Refund the full alert amount
+
+When refunding, process the exact value shown on the alert. For example, refunding only USD 10.99 against a USD 19.99 alert may still result in a chargeback.
+
+Any tolerance used to identify a candidate transaction is for matching only; it does not change the amount to refund. If the alert and payment currencies differ, confirm the correct refund handling with your payment provider before processing it.
+
+### Confirm the refund succeeded
+
+Check the payment provider or acquirer confirmation before recording **Refunded**. A submitted refund request alone is not confirmation that the refund completed.
+
+Record the outcome in Trusto and communicate the refund to the customer.
+
+## Choose the resolution status
 
 <img
-  style={{ borderRadius:"0.5rem" }}
+  style={{ borderRadius: "0.5rem" }}
   src="/images/resolution.png"
+  alt="Trusto alert resolution options"
 />
 
 ### Refunded
 
-The transaction was refunded. The customer has been communicated to. The alert has helped to prevent the chargeback
+Use when the transaction has been refunded successfully and the customer has been informed. A timely refund helps prevent the chargeback.
 
 ### Not Refunded
 
-The transaction was not refunded. You disagree with the reason of the alert and willing to proceed with a chargeback flow
+Use when you have chosen not to refund the transaction and are prepared to proceed through the chargeback process.
 
 ### Invalid
 
-This status means that the alert was not able to potentially prevent a chargeback and is going to be disputed.
-This will be taken by Trusto with the alerts provider for the dispute.
-Alert may be flagged as Invalid for one of the following reasons:
+Use when the alert could not serve its intended chargeback-prevention purpose for one of the reasons below. Trusto can raise the case with the alert provider for review.
 
-| Reason                  | Description                                                                                                                                   |
-| ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Previosly Refunded**  | _Alert has been received after the refund has been made, including failed/reversed auths_                                                     |
-| **Chargeback Received** | _The chargeback was already processed before the alert was issued_                                                                            |
-| **Duplicate**           | _The same transaction received multiple alerts, making the extra alerts invalid. Note: provide in the comments the ID of the original alert._ |
-| **Not Found**           | _The transaction referenced in the alert does not exist in the merchant’s records_                                                            |
+| Reason | When to use it | What to record |
+| --- | --- | --- |
+| **Previously Refunded** | The refund was made before the alert arrived. The existing guidance also includes failed or reversed authorizations under this reason. | The refund or authorization reversal evidence and its timing. |
+| **Chargeback Received** | The chargeback was already processed before the alert was issued. | The chargeback reference and processing date. |
+| **Duplicate** | Multiple alerts refer to the same transaction. | The original alert ID in the comments. |
+| **Not Found** | The transaction cannot be located in your merchant records after review. | The records checked and why no transaction could be verified. |
+
+## Final check
+
+Before closing the alert, confirm that the selected payment is correct, any required refund has succeeded, and the recorded status reflects what happened. Include supporting references so the resolution can be reviewed later.
