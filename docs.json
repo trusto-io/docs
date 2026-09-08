@@ -41,6 +41,18 @@
             "tab": "Documentation",
             "groups": [
               {
+                "group": "Getting started",
+                "pages": [
+                  "main"
+                ]
+              },
+              {
+                "group": "Getting started",
+                "pages": [
+                  "main"
+                ]
+              },
+              {
                 "group": "",
                 "pages": [
                   "main"
@@ -51,6 +63,18 @@
           {
             "tab": "Resolving alerts",
             "groups": [
+              {
+                "group": "Alert management",
+                "pages": [
+                  "alerts"
+                ]
+              },
+              {
+                "group": "Alert management",
+                "pages": [
+                  "alerts"
+                ]
+              },
               {
                 "group": "",
                 "pages": [
@@ -64,8 +88,22 @@
       {
         "anchor": "API Reference",
         "icon": "code",
-        "href": "/api-reference/trusto-api"
+        "groups": [
+          {
+            "group": "API Reference",
+            "pages": [
+              "api-reference/trusto-api"
+            ]
+          }
+        ]
       }
     ]
-  }
+  },
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/main",
+      "permanent": false
+    }
+  ]
 }
