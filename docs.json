@@ -75,7 +75,8 @@
             "group": "Sandbox",
             "icon": "flask-conical",
             "pages": [
-              "sandbox/list-alerts"
+              "sandbox/list-alerts",
+              "sandbox/resolve-alert"
             ]
           }
         ]
