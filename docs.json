@@ -1,0 +1,93 @@
+{
+  "theme": "mint",
+  "name": "Trusto.io - Prevent Chargebacks",
+  "colors": {
+    "primary": "#0F47C0",
+    "light": "#00CFFD",
+    "dark": "#CDFF50"
+  },
+  "favicon": "/favicon.svg",
+  "logo": {
+    "light": "/logo/trusto_logo.png",
+    "dark": "/logo/trusto_logo_dark.svg"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Support",
+        "href": "mailto:hi@mintlify.com"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Dashboard",
+      "href": "https://app.trusto.io"
+    }
+  },
+  "footer": {
+    "socials": {
+      "x": "https://x.com/mintlify",
+      "github": "https://github.com/mintlify",
+      "linkedin": "https://linkedin.com/company/mintlify"
+    }
+  },
+  "navigation": {
+    "anchors": [
+      {
+        "anchor": "Documentation",
+        "icon": "book-open",
+        "tabs": [
+          {
+            "tab": "Documentation",
+            "groups": [
+              {
+                "group": "",
+                "pages": [
+                  "main"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Resolving alerts",
+            "groups": [
+              {
+                "group": "",
+                "pages": [
+                  "alerts"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "anchor": "API Reference",
+        "icon": "code",
+        "openapi": {
+          "source": "/api-reference/openapi.json",
+          "directory": "api-reference"
+        },
+        "tabs": [
+          {
+            "tab": "API Reference",
+            "groups": [
+              {
+                "group": "Authentication",
+                "icon": "lock",
+                "pages": []
+              },
+              {
+                "group": "Webhooks",
+                "icon": "lock",
+                "pages": [
+                  "api-reference/webhooks/introduction"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
