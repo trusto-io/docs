@@ -49,7 +49,7 @@
             ]
           },
           {
-            "tab": "Resolving alerts",
+            "tab": "Matching and resolving alerts",
             "groups": [
               {
                 "group": "Alert management",
