@@ -1,6 +1,6 @@
 ---
-title: 'Trusto Webhooks'
-description: 'Webhooks API reference'
+title: "Trusto Webhooks"
+description: "Webhooks API reference"
 ---
 
 # Webhooks
@@ -8,25 +8,31 @@ description: 'Webhooks API reference'
 Webhooks enable organizations to receive event notifications about their subscribed entities.
 
 ## Supported Events:
-| Event            | Description                               |
-|-------------------|-------------------------------------------|
-| alert.created     | Triggered when a new alert is created.   |
-| alert.resolved    | Triggered when an alert is resolved.     |
+
+| Event          | Description                            |
+| -------------- | -------------------------------------- |
+| alert.created  | Triggered when a new alert is created. |
+| alert.resolved | Triggered when an alert is resolved.   |
 
 ## Request Headers:
-| Header           | Type    | Required | Description                       |
-|-------------------|---------|----------|-----------------------------------|
-| Content-Type      | string  | Yes      | Specifies the request content type (`application/json`). |
-| Authorization     | string  | Yes      | Can use Basic Authentication or custom headers. |
+
+| Header        | Type   | Required | Description                                              |
+| ------------- | ------ | -------- | -------------------------------------------------------- |
+| Content-Type  | string | Yes      | Specifies the request content type (`application/json`). |
+| Authorization | string | Yes      | Can use Basic Authentication or custom headers.          |
 
 ### Authentication Options:
+
 1. **Basic Authentication**:
+
 - Add `Authorization: Basic <BASE64_ENCODED_CREDENTIALS>`.
 
-2. **Custom Header**:
+1. **Custom Header**:
+
 - Use a custom header, e.g., `X-API-Key: <API_KEY>`.
 
 ### Sample Webhook Request:
+
 ```bash
 curl -X POST "https://your.webhook.url" \
 -H "Content-Type: application/json" \
@@ -35,10 +41,52 @@ curl -X POST "https://your.webhook.url" \
   "event": "alert.created",
   "timestamp": "2024-11-01T00:00:00Z",
   "payload": {
-    "id": "c8edf8a4-4e4d-4821-af34-9ed2995cbd8b",
-    "type": "CONFIRMED_FRAUD",
-    "amount": 250.75,
-    ...
-  }
+            "id": "5e287b34-9c0b-430c-95ad-08a44c17de9a",
+            "providerId": "1MICKEYMOUSE123",
+            "provider": "ETHOCA",
+            "type": "ETHOCA_CONFIRMED_FRAUD",
+            "alertTimeStamp": "2015-02-27T04:33:04.328Z",
+            "enrollmentId": "b52fd403-54f6-4a82-8bc5-516221115276",
+            "companyId": d2599442-95fa-49bf-a0a2-086362ef2283,
+            "issuer": "CARD_ISSUER",
+            "cardBin": "800012",
+            "cardLastFour": "1224",
+            "cardExpirationDate": null,
+            "acquirerBin": null,
+            "status": "OPEN",
+            "statusCode": null,
+            "ruleType": null,
+            "ruleName": null,
+            "installmentNumber": null,
+            "pricingTier": null,
+            "transactionTimeStamp": "2015-02-28T04:33:04.328Z",
+            "merchantDescriptor": "MINNIE MOUSE STORE",
+            "descriptorContact": null,
+            "ethocaMergantId": "{\"Merchant2\",\"98765\"}",
+            "merchantId": "456789",
+            "merchantOrderId": null,
+            "merchantName": "ABC ONLINE",
+            "partnerId": null,
+            "partnerName": null,
+            "clientName": null,
+            "caid": null,
+            "mcc": null,
+            "amount": "352.99",
+            "currency": "USD",
+            "transactionType": "eCommerce",
+            "initiatedBy": "issuer",
+            "authCode": "73536582",
+            "source": null,
+            "reasonCode": null,
+            "acquirerReferenceNumber": null,
+            "transactionId": null,
+            "chargebackAmount": null,
+            "chargebackCurrency": null,
+            "paymentType": null,
+            "createdAt": "2024-12-31T09:23:14.096Z",
+            "updatedAt": "2024-12-31T09:23:14.096Z",
+            "outcome": null,
+            "hoursLeft": 0
+        }
 }'
 ```

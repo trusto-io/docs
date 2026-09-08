@@ -1,0 +1,92 @@
+---
+title: "Resolve an alert"
+sidebarTitle: "Resolve an alert"
+description: "Interactively submit a resolution for a Trusto alert."
+icon: "check"
+api: "PUT /api/v1/alerts/{id}/resolution"
+authMethod: "key"
+playground: "interactive"
+---
+
+Submit a merchant resolution for an unresolved alert. The sandbox environment is selected by default; use the server selector to switch environments.
+
+<ParamField path="id" type="string" required>
+  Alert UUID in the Trusto system.
+</ParamField>
+
+<ParamField body="refunded" type="string" required>
+  Merchant decision: `REFUNDED`, `NOT REFUNDED`, `NOT SETTLED`, or `INVALID`.
+</ParamField>
+
+<ParamField body="resolution" type="string">
+  For `INVALID`, use `REFUNDED_PREVIOUSLY_REFUNDED`, `NOT_REFUNDED_CHARGEBACK_RECEIVED`, `NOT_REFUNDED_DUPLICATE`, or `NOT_REFUNDED_NOT_FOUND`.
+</ParamField>
+
+<ParamField body="comments" type="string">
+  Optional free-form comment, up to 250 characters.
+</ParamField>
+
+<RequestExample>
+
+```json Refunded
+{
+  "refunded": "REFUNDED",
+  "comments": "Customer was refunded in full."
+}
+```
+
+```json Invalid alert
+{
+  "refunded": "INVALID",
+  "resolution": "NOT_REFUNDED_DUPLICATE",
+  "comments": "Duplicate alert."
+}
+```
+
+</RequestExample>
+
+<ResponseField name="id" type="string" required>
+  Alert UUID.
+</ResponseField>
+
+<ResponseField name="status" type="string" required>
+  Updated alert status.
+</ResponseField>
+
+<ResponseField name="outcome" type="Outcome" required>
+  Stored resolution returned with the alert.
+</ResponseField>
+
+<ResponseExample>
+
+```json
+{
+  "id": "3114afe2-9996-48c9-88cb-3c9fc6a88414",
+  "providerId": "5F2RE3960S9ASDC2F026BF16",
+  "provider": "ETHOCA",
+  "status": "RESOLVED",
+  "amount": 100.12,
+  "currency": "AED",
+  "outcome": {
+    "id": "4a0c8f5d-4b8d-4f4d-8f1a-2f8c9c1e5b7b",
+    "alertId": "3114afe2-9996-48c9-88cb-3c9fc6a88414",
+    "ethocaID": "5F2RE3960S9ASDC2F026BF16",
+    "status": "SUCCESS",
+    "outcome": "resolved",
+    "refunded": "refunded",
+    "comments": "Customer was refunded in full.",
+    "disputeReasonCode": null,
+    "actionTimestamp": "2024-12-12T12:05:00.000Z"
+  }
+}
+```
+
+</ResponseExample>
+
+<Warning>
+  Submitting a resolution changes the alert and forwards the outcome to the configured provider. Confirm the selected environment and alert ID before sending.
+</Warning>
+
+<Card title="List alerts" icon="list-filter" href="/sandbox/list-alerts">
+  Retrieve alerts and copy an alert ID for resolution testing.
+</Card>

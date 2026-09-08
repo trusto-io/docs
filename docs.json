@@ -1,0 +1,118 @@
+{
+  "theme": "mint",
+  "name": "Trusto.io - Prevent Chargebacks",
+  "colors": {
+    "primary": "#0F47C0",
+    "light": "#00CFFD",
+    "dark": "#CDFF50"
+  },
+  "favicon": "https://cdn.prod.website-files.com/67359ad89bed4dbe4fdca7e1/673f5ca146dfeff2f25992aa_Frame%20(1).png",
+  "logo": {
+    "light": "/logo/trusto_logo.png",
+    "dark": "/logo/trusto_logo_dark.svg"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Support",
+        "href": "mailto:hi@mintlify.com"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Dashboard",
+      "href": "https://app.trusto.io"
+    }
+  },
+  "footer": {
+    "socials": {
+      "x": "https://x.com/mintlify",
+      "github": "https://github.com/mintlify",
+      "linkedin": "https://linkedin.com/company/mintlify"
+    }
+  },
+  "navigation": {
+    "anchors": [
+      {
+        "anchor": "Documentation",
+        "icon": "book-open",
+        "tabs": [
+          {
+            "tab": "Documentation",
+            "groups": [
+              {
+                "group": "Getting started",
+                "pages": [
+                  "main"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Matching and resolving alerts",
+            "groups": [
+              {
+                "group": "Alert management",
+                "pages": [
+                  "alerts"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "anchor": "API Reference",
+        "icon": "code",
+        "groups": [
+          {
+            "group": "API Reference",
+            "pages": [
+              "api-reference/trusto-api"
+            ]
+          },
+          {
+            "group": "Sandbox",
+            "icon": "flask-conical",
+            "pages": [
+              "sandbox/list-alerts",
+              "sandbox/resolve-alert"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/main",
+      "permanent": false
+    }
+  ],
+  "api": {
+    "playground": {
+      "display": "interactive",
+      "proxy": true
+    },
+    "examples": {
+      "defaults": "required",
+      "languages": [
+        "curl",
+        "python",
+        "javascript"
+      ],
+      "prefill": true
+    },
+    "mdx": {
+      "auth": {
+        "method": "key",
+        "name": "X-API-KEY"
+      },
+      "server": [
+        "https://api.trusto.one",
+        "https://api.trusto.io"
+      ]
+    }
+  }
+}

@@ -27,6 +27,10 @@
   },
   "tabs": [
     {
+      "name": "Resolving alerts",
+      "url": "alerts"
+    },
+    {
       "name": "API Reference",
       "url": "api-reference"
     }
@@ -42,10 +46,10 @@
   ],
   "navigation": [
     {
-      "group": "Get Started",
+      "group": "",
       "pages": [
         "main",
-        "api-reference"
+        "alerts"
       ]
     },
     {
