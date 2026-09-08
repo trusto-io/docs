@@ -41,7 +41,7 @@
             "tab": "Documentation",
             "groups": [
               {
-                "group": "",
+                "group": "Getting started",
                 "pages": [
                   "main"
                 ]
@@ -52,7 +52,7 @@
             "tab": "Resolving alerts",
             "groups": [
               {
-                "group": "",
+                "group": "Alert management",
                 "pages": [
                   "alerts"
                 ]
@@ -64,8 +64,22 @@
       {
         "anchor": "API Reference",
         "icon": "code",
-        "href": "/api-reference/trusto-api"
+        "groups": [
+          {
+            "group": "API Reference",
+            "pages": [
+              "api-reference/trusto-api"
+            ]
+          }
+        ]
       }
     ]
-  }
+  },
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/main",
+      "permanent": false
+    }
+  ]
 }
