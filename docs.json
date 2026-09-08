@@ -79,9 +79,7 @@
         "groups": [
           {
             "group": "API Reference",
-            "pages": [
-              "api-reference/trusto-api"
-            ]
+            "pages": []
           }
         ]
       },
@@ -91,5 +89,12 @@
         "href": "/api-reference/trusto-api"
       }
     ]
-  }
+  },
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/main",
+      "permanent": false
+    }
+  ]
 }
