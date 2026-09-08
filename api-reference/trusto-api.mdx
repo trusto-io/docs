@@ -70,7 +70,7 @@ curl "https://api.trusto.io/api/v1/alerts?page=0&size=10&startDate=2024-10-01&en
   "data": [
     {
       "id": "c8edf8a4-4e4d-4821-af34-9ed2995cbd8b",
-      "providerId": "2L07DBRFGBDLIW7SH59V969JG",
+      "providerId": "6d9e6dc7-3cf7-4a9d-ae66-97bcf86b80d2",
       "provider": "ETHOCA",
       "type": "ETHOCA_CONFIRMED_FRAUD",
       "alertTimeStamp": "2024-11-10T19:07:56.293Z",
@@ -149,7 +149,7 @@ curl "https://api.trusto.io/api/v1/alerts/c8edf8a4-4e4d-4821-af34-9ed2995cbd8b" 
 ```json
 {
   "id": "c8edf8a4-4e4d-4821-af34-9ed2995cbd8b",
-  "providerId": "2L07DBRFGBDLIW7SH59V969JG",
+  "providerId": "6d9e6dc7-3cf7-4a9d-ae66-97bcf86b80d2",
   "provider": "ETHOCA",
   "type": "ETHOCA_CONFIRMED_FRAUD",
   "status": "RESOLVED",
@@ -161,12 +161,10 @@ curl "https://api.trusto.io/api/v1/alerts/c8edf8a4-4e4d-4821-af34-9ed2995cbd8b" 
   "outcome": {
     "id": "4a0c8f5d-4b8d-4f4d-8f1a-2f8c9c1e5b7b",
     "alertId": "c8edf8a4-4e4d-4821-af34-9ed2995cbd8b",
-    "ethocaID": "2L07DBRFGBDLIW7SH59V969JG",
+    "ethocaID": "6d9e6dc7-3cf7-4a9d-ae66-97bcf86b80d2",
     "status": "SUCCESS",
     "outcome": "other",
     "refunded": "refunded",
-    "firstPartyFraud": "no",
-    "amountStopped": null,
     "comments": "Customer issue resolved.",
     "disputeReasonCode": null,
     "actionTimestamp": "2024-11-10T19:12:20.000Z"
@@ -299,8 +297,6 @@ Trusto can send either Basic Authentication or custom headers configured for the
 | status | string | Outcome processing status, such as `SUCCESS`. |
 | outcome | string | Internal normalized outcome. |
 | refunded | string | Stored normalized refund decision. |
-| firstPartyFraud | string or null | Deprecated legacy field. |
-| amountStopped | number or null | Deprecated or provider-specific stopped amount. |
 | comments | string | Resolution comments. |
 | disputeReasonCode | string or null | Normalized invalid reason. |
 | actionTimestamp | string | Resolution timestamp in ISO 8601 format. |
