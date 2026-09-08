@@ -75,7 +75,8 @@
             "group": "Sandbox",
             "icon": "flask-conical",
             "pages": [
-              "sandbox/list-alerts"
+              "sandbox/list-alerts",
+              "sandbox/resolve-alert"
             ]
           }
         ]
@@ -88,5 +89,30 @@
       "destination": "/main",
       "permanent": false
     }
-  ]
+  ],
+  "api": {
+    "playground": {
+      "display": "interactive",
+      "proxy": true
+    },
+    "examples": {
+      "defaults": "required",
+      "languages": [
+        "curl",
+        "python",
+        "javascript"
+      ],
+      "prefill": true
+    },
+    "mdx": {
+      "auth": {
+        "method": "key",
+        "name": "X-API-KEY"
+      },
+      "server": [
+        "https://api.trusto.one",
+        "https://api.trusto.io"
+      ]
+    }
+  }
 }
