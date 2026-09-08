@@ -41,6 +41,12 @@
             "tab": "Documentation",
             "groups": [
               {
+                "group": "Getting started",
+                "pages": [
+                  "main"
+                ]
+              },
+              {
                 "group": "",
                 "pages": [
                   "main"
@@ -51,6 +57,12 @@
           {
             "tab": "Resolving alerts",
             "groups": [
+              {
+                "group": "Alert management",
+                "pages": [
+                  "alerts"
+                ]
+              },
               {
                 "group": "",
                 "pages": [
