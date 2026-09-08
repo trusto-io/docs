@@ -1,0 +1,68 @@
+---
+api: "GET /api/v1/alerts"
+authMethod: "key"
+playground: "interactive"
+title: "List alerts"
+sidebarTitle: "List alerts"
+description: "Interactively retrieve and filter Trusto alerts."
+icon: "list-filter"
+---
+
+Retrieve a paginated collection of alerts available to the organization associated with your API key. The sandbox environment is selected by default; use the server selector to switch environments. Array-valued filters accept comma-separated values.
+
+<ParamField query="page" type="integer" default="0">Zero-based page number.</ParamField>
+<ParamField query="size" type="integer" default="10">Number of alerts per page.</ParamField>
+<ParamField query="q" type="string">Case-insensitive search across provider ID, merchant descriptor, card BIN, and card last four.</ParamField>
+<ParamField query="startDate" type="string">Include alerts registered on or after this date in `YYYY-MM-DD` format.</ParamField>
+<ParamField query="endDate" type="string">Include alerts registered on or before this date in `YYYY-MM-DD` format.</ParamField>
+<ParamField query="transactionStartDate" type="string">Include transactions occurring on or after this date in `YYYY-MM-DD` format.</ParamField>
+<ParamField query="transactionEndDate" type="string">Include transactions occurring on or before this date in `YYYY-MM-DD` format.</ParamField>
+<ParamField query="provider" type="string">One or more providers: `ETHOCA`, `VERIFI`, or `CDRN`.</ParamField>
+<ParamField query="status" type="string">One or more statuses: `OPEN`, `RESOLVED`, `REFUNDED`, `CHARGEBACK`, `EXPIRED`, or `INVALID`.</ParamField>
+<ParamField query="expired" type="boolean">Filter by whether the alert has an expiration timestamp.</ParamField>
+<ParamField query="expiresIn" type="integer">Return unresolved alerts expiring within this many hours.</ParamField>
+<ParamField query="outcome" type="string">One or more stored outcome values, such as `resolved` or `previously_refunded`.</ParamField>
+<ParamField query="descriptor" type="string">Filter by merchant descriptor prefix.</ParamField>
+<ParamField query="type" type="string">Filter by an exact alert type.</ParamField>
+<ParamField query="companyId" type="string">One or more comma-separated company UUIDs.</ParamField>
+<ParamField query="sortField" type="string">Alert property used for sorting, such as `alertTimeStamp`, `amount`, or `status`.</ParamField>
+<ParamField query="sortOrder" type="string" default="ASC">Sort direction: `ASC` or `DESC`.</ParamField>
+
+<ResponseField name="data" type="Alert[]" required>Alerts for the current page. Each alert includes its current `outcome` and calculated `hoursLeft`.</ResponseField>
+<ResponseField name="total" type="integer" required>Total number of matching alerts.</ResponseField>
+<ResponseField name="totalPages" type="integer" required>Total number of pages.</ResponseField>
+<ResponseField name="page" type="integer" required>Current zero-based page number.</ResponseField>
+<ResponseField name="size" type="integer" required>Requested page size.</ResponseField>
+
+<ResponseExample>
+```json
+{
+  "data": [
+    {
+      "id": "3114afe2-9996-48c9-88cb-3c9fc6a88414",
+      "providerId": "5F2RE3960S9ASDC2F026BF16",
+      "provider": "ETHOCA",
+      "type": "ETHOCA_CONFIRMED_FRAUD",
+      "alertTimeStamp": "2024-12-12T12:00:00.000Z",
+      "transactionTimeStamp": "2024-12-11T10:30:00.000Z",
+      "merchantDescriptor": "MERCHANT STORE 1",
+      "amount": 100.12,
+      "currency": "AED",
+      "status": "OPEN",
+      "expiredAt": null,
+      "hasExternalTransaction": false,
+      "outcome": null,
+      "hoursLeft": 18
+    }
+  ],
+  "total": 1,
+  "totalPages": 1,
+  "page": 0,
+  "size": 10
+}
+```
+</ResponseExample>
+
+<Card title="Resolve an alert" icon="check" href="/sandbox/resolve-alert">
+  Submit a resolution for an unresolved alert.
+</Card>
