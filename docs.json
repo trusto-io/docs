@@ -47,6 +47,12 @@
                 ]
               },
               {
+                "group": "Getting started",
+                "pages": [
+                  "main"
+                ]
+              },
+              {
                 "group": "",
                 "pages": [
                   "main"
@@ -57,6 +63,12 @@
           {
             "tab": "Resolving alerts",
             "groups": [
+              {
+                "group": "Alert management",
+                "pages": [
+                  "alerts"
+                ]
+              },
               {
                 "group": "Alert management",
                 "pages": [
@@ -79,14 +91,11 @@
         "groups": [
           {
             "group": "API Reference",
-            "pages": []
+            "pages": [
+              "api-reference/trusto-api"
+            ]
           }
         ]
-      },
-      {
-        "anchor": "API Reference",
-        "icon": "code",
-        "href": "/api-reference/trusto-api"
       }
     ]
   },
